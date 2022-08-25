@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title> example wibesite </title>
+</head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+<link rel="stylesheet" href="./css/style.css">
+
+<body>
+
+    <div class="section-1">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <h1> simple wibesite </h1>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="https://www.instagram.com/kamifoundation/?hl=id"
+                            tabindex="-1" aria-disabled="true"> KAMI </a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" id="search" placeholder="Search"
+                        aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0 text-right" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </div>
+
+    <div class="section-2">
+        <h3 class="text-center"> DATA ANGGOTA KAMI </h3>
+        <form name="todoForm">
+            <table>
+                <tbody>
+                    <tr>
+                        <td><label for="todo">Todo: </label></td>
+                        <td><input type="text" id="todo" name="todo"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="tambah data"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        <h1>TodoList</h1>
+        <table>
+            <tbody id="todolist">
+                <tr>
+                    <td><input type="button" value="Done"></td>
+                    <td>Todo</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="section-3">
+        <div class="container">
+            <h2 class="text-center"><strong>ABOUT KAMI</strong></h2>
+            <div class="row">
+                <div class="col-sm">
+                    <img src="./img/sample foto.jpg" alt="" srcset="">
+                </div>
+                <div class="col-sm">
+                    <div class="declaration">
+                        <p> Hai, Sobat KAMI,
+                        <p>
+                            Milenial Mengabdi 2.0 dengan kobaran penuh semangat dan harapan sudah siap ke Raja Ampat
+                            untuk
+                            membawa gebrakan luar biasa yang tentunya berdampak bagi Indonesia!!
+                        </p>
+                        <p>
+                            Mari kuatkan tekad tuk berani mengambil langkah dengan berdedikasi serta berkontribusi pada
+                            negeri
+                            Milenial Mengabdi,
+                            Abdi Kami Untuk Negeri🇲🇨
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        const todolist = [
+            "Maulana Anhar ",
+            "Jaka Winarto",
+            "Budi Firmansyah",
+            "Hadi Rachmat S"
+        ];
+
+        function clearTodolistTable() {
+            const todolistTable = document.getElementById("todolist");
+            while (todolistTable.firstChild) {
+                todolistTable.removeChild(todolistTable.firstChild);
+            }
+        }
+
+        function removeTodoList(index) {
+            todolist.splice(index, 1);
+            renderTodolist();
+        }
+
+        function addTodoToTable(index, todo) {
+            const todolistTable = document.getElementById("todolist");
+            const todoRow = document.createElement("tr");
+            todolistTable.append(todoRow);
+
+            const todoItem = document.createElement("td");
+            todoItem.textContent = todo;
+
+            const todoButtonItem = document.createElement("td");
+            const todoButtonDone = document.createElement("input");
+            todoButtonDone.type = "button";
+            todoButtonDone.value = "Done";
+            todoButtonDone.onclick = function () {
+                removeTodoList(index);
+            };
+            todoButtonItem.append(todoButtonDone);
+
+            todoRow.append(todoButtonItem, todoItem);
+        }
+
+        function renderTodolist() {
+            clearTodolistTable();
+            for (let i = 0; i < todolist.length; i++) {
+                const searchField = document.getElementById("search");
+                if (todolist[i].toLowerCase().includes(searchField.value.trim().toLowerCase())) {
+                    addTodoToTable(i, todolist[i]);
+                }
+            }
+        }
+
+        document.forms['todoForm'].onsubmit = function (event) {
+            event.preventDefault();
+
+            const todo = document.forms['todoForm']['todo'].value
+            todolist.push(todo);
+            document.forms['todoForm'].reset();
+
+            renderTodolist();
+        }
+
+        const searchField = document.getElementById("search");
+        searchField.onkeydown = renderTodolist;
+        searchField.onkeyup = renderTodolist;
+
+        renderTodolist();
+
+    </script>
+
+</body>
+
+</html>
